@@ -62,7 +62,7 @@ public class PaintingControllerRestFull {
 
     // tìm kiếm tên gần đúng
     @GetMapping("painting/search")
-    public ResponseEntity<Iterable<Painting>> findByName(@RequestParam String name) {
+    public ResponseEntity<Iterable<Painting>> findByName(@RequestParam("name") String name) {
         Iterable<Painting> painting = iPaintingService.findPaintingByName(name);
         if (painting != null) {
             return new ResponseEntity<>(painting, HttpStatus.OK);

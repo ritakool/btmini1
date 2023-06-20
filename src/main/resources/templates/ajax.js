@@ -234,5 +234,63 @@ function saveNewPainting() {
         }
     });
 }
+function showFormSearch() {
+    let form = "";
+    form += `
+    <input type="text" id = "search">
+    <button onclick="searchByName()">Search</button>`;
+    document.getElementById("display").innerHTML = form;
+}
+function searchByName() {
+    let search = document.getElementById("search").value;
+    $.ajax({
+        type: "GET",
+        url: "http://localhost:8080/api/painting/search?name=" + search,
+        success: function (data) {
+            console.log(data);
+            let painting = "";
+            painting += `
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Height</th>
+                    <th>Width</th>
+                    <th>Material</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Categories</th>
+                    <th>Actions</th>
+                    </tr>`;
 
+            for (let i = 0; i < data.length; i++) {
+                painting += `<tr>
+                    <td>${data[i].id}</td>
+                    <td>${data[i].name}</td>
+                    <td>${data[i].height}</td>
+                    <td>${data[i].width}</td>
+                    <td>${data[i].material}</td>
+                    <td>${data[i].description}</td>
+                    <td>${data[i].price}</td>
+                    <td>`;
+
+                for (let j = 0; j < data[i].categories.length; j++) {
+                    painting += `${data[i].categories[j].name}`;
+
+                    if (j < data[i].categories.length - 1) {
+                        painting += ", ";
+                    }
+                }
+
+                painting += `</td>
+                <td><button onclick="showFormUpdated(${data[i].id})">Update</button></td>
+                <td><button onclick="delete(${data[i].id})">Delete</button></td>
+                </tr>`;
+            }
+
+            painting += `</table>`;
+            document.getElementById("display").innerHTML = painting;
+        }
+    });
+}
 
