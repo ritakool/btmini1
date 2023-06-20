@@ -37,6 +37,11 @@ public class PaintingControllerRestFull {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @DeleteMapping("painting/{id}")
+    public ResponseEntity<Painting> deleteById(@PathVariable Long id) {
+            iPaintingService.remote(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
 
     @PostMapping("painting")
     public ResponseEntity<Painting> addPainting(@RequestBody Painting painting) {

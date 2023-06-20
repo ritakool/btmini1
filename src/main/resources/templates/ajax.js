@@ -368,6 +368,7 @@ function deleteById(id) {
         type: "DELETE",
         url: "http://localhost:8080/api/painting/" + id,
         success: function () {
+            console.log("deleted");
             showAll();
         }
     });
